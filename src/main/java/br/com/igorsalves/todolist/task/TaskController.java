@@ -1,5 +1,6 @@
 package br.com.igorsalves.todolist.task;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,16 @@ public class TaskController {
   public ResponseEntity create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
     var idUser = request.getAttribute("idUser");
     taskModel.setIdUser((UUID) idUser);
+
+    var currentDate = LocalDateTime.now();
+
+    if(currentDate.isAfter(taskModel.getStartAt()) || currentDate.isBefore(taskModel.getEndAt())) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de início / data de término deve ser maior que a data atual");
+    }
+
+    if(taskModel.getStartAt().isAfter(taskModel.getEndAt())) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de início deve ser menor que a data de término");
+    }
 
     var taskCreated = taskRepository.save(taskModel);
 

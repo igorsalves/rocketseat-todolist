@@ -1,0 +1,36 @@
+package br.com.igorsalves.todolist.task;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import lombok.*;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "tb_tasks")
+public class TaskModel {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  private UUID id;
+  private String description;
+
+  @Column(length = 50)
+  private String title;
+  private LocalDateTime startAt;
+  private LocalDateTime endAt;
+  private String priority;
+
+  @CreationTimestamp
+  private LocalDateTime createdAt;
+
+  private UUID idUser;
+}

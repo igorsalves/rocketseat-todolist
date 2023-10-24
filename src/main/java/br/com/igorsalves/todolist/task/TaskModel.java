@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 
 import lombok.*;
 
@@ -17,6 +18,7 @@ import lombok.*;
 public class TaskModel {
 
   @Id
+  @Type(type = "uuid-char")
   @GeneratedValue(generator = "UUID")
   private UUID id;
   private String description;
@@ -27,6 +29,7 @@ public class TaskModel {
   private LocalDateTime endAt;
   private String priority;
 
+  @Type(type = "uuid-char")
   private UUID idUser;
 
   @CreationTimestamp
